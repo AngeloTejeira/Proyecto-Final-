@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  python:
+    build: ./app
+    depends_on: 
+      - restapi
+  restapi:
+    build: ./restapi
+    depends_on: 
+      - mongo
+  mongo:
+    image: "mongo:latest"
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - python
